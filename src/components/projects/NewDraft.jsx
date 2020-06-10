@@ -4,7 +4,7 @@ import draftContext from '../../context/projects/draftContext'
 
 const NewDraft = () => {
   const projectsContext = useContext(draftContext)
-  const { form, showForm } = projectsContext
+  const { form, errorForm, showForm, addDraft, showError } = projectsContext
 
   const [draft, setDraft] = useState({
     name: ''
@@ -19,6 +19,16 @@ const NewDraft = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault()
+
+    if (draft.name === '') {
+      showError()
+      return
+    }
+
+    addDraft(draft)
+    setDraft({
+      name: ''
+    })
   }
 
   return (
@@ -50,6 +60,8 @@ const NewDraft = () => {
           </form>
         ) : null
       }
+
+      {errorForm ? <p className="mensaje error ">El nombre del proyecto es obligatorio</p> : null}
     </Fragment>
   )
 }

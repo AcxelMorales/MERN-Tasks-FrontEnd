@@ -1,5 +1,7 @@
 import React, { useReducer } from 'react'
 
+import { v4 } from 'uuid'
+
 import draftContext from './draftContext'
 import draftReducer from './draftReducer'
 
@@ -14,12 +16,18 @@ const DraftState = props => {
 
   const initialState = {
     projects: [],
-    form: false
+    form: false,
+    errorForm: false,
+    draft: null
   }
 
   const [state, dispach] = useReducer(draftReducer, initialState)
 
-  const showForm = () => dispach({ type: action.FORM_DRAFT })
+  const showForm = () => {
+    dispach({
+      type: action.FORM_DRAFT
+    })
+  }
 
   const getProjects = () => {
     dispach({
@@ -28,13 +36,48 @@ const DraftState = props => {
     })
   }
 
+  const addDraft = draft => {
+    draft.id = v4()
+
+    dispach({
+      type: action.ADD_DRAFT,
+      payload: draft
+    })
+  }
+
+  const showError = () => {
+    dispach({
+      type: action.VALID_FORM
+    })
+  }
+
+  const actualProject = draftId => {
+    dispach({
+      type: action.ACTUAL_PROJECT,
+      payload: draftId
+    })
+  }
+
+  const deleteDraft = draftId => {
+    dispach({
+      type: action.DELETE_DRAFT,
+      payload: draftId
+    })
+  }
+
   return (
     <draftContext.Provider
       value={{
         projects: state.projects,
         form: state.form,
+        errorForm: state.errorForm,
+        draft: state.draft,
         showForm,
-        getProjects
+        getProjects,
+        addDraft,
+        showError,
+        actualProject,
+        deleteDraft
       }}
     >
       {props.children}

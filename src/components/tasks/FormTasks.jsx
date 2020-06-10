@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import draftContext from '../../context/projects/draftContext'
 
 const FormTasks = () => {
+  const projectsContext = useContext(draftContext)
+  const { draft } = projectsContext
+
+  if (!draft) return null
+
+  const [actualProject] = draft
+
   return (
     <div className="formulario">
       <form>

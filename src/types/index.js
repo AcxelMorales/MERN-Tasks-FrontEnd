@@ -1,2 +1,6 @@
-export const FORM_DRAFT   = 'FORM_DRAFT'
-export const GET_PROJECTS = 'GET_PROJECTS'
+export const FORM_DRAFT     = 'FORM_DRAFT'
+export const GET_PROJECTS   = 'GET_PROJECTS'
+export const ADD_DRAFT      = 'ADD DRAFT'
+export const VALID_FORM     = 'VALID FORM'
+export const ACTUAL_PROJECT = 'ACTUAL_PROJECT'
+export const DELETE_DRAFT   = 'DELETE_DRAFT'

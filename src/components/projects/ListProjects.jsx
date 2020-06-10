@@ -10,9 +10,9 @@ const ListProjects = () => {
 
   useEffect(() => {
     getProjects()
-  }, [getProjects]) // se agrego como dependencia, pero se tiene que checar
+  }, []) // se agrego como dependencia, pero se tiene que checar
 
-  if (projects.length === 0) return null
+  if (projects.length === 0) return <p className="mensaje info">No hay proyectos, comienza creando uno</p>
 
   return (
     <ul className="listado-proyectos">
