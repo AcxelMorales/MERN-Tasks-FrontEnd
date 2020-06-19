@@ -1,6 +1,9 @@
 import React, { Fragment, useContext } from 'react'
 
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+
 import draftContext from '../../context/projects/draftContext'
+import taskContext from '../../context/tasks/taskContext'
 
 import Task from './Tasks'
 
@@ -8,26 +11,31 @@ const ListTasks = () => {
   const projectsContext = useContext(draftContext)
   const { draft, deleteDraft } = projectsContext
 
+  const tasksContext = useContext(taskContext)
+  const { taskDraft } = tasksContext
+
   if (!draft) return <h2>Selecciona un proyecto</h2>
 
   const [actualProject] = draft
-
-  const tasks = [
-    { name: 'Elegir tecnologias', status: true },
-    { name: 'Elegir colores', status: false },
-    { name: 'Métodos de pago', status: true },
-    { name: 'Base de datos', status: false }
-  ]
 
   return (
     <Fragment>
       <h2>Proyecto: {actualProject.name}</h2>
       <ul className="listado-tareas">
-        {tasks.length === 0
+        {taskDraft.length === 0
           ? (<li className="tarea"> <p>No hay tareas</p> </li>)
-          : tasks.map(task => (
-            <Task task={task} key={task.name} />
-          ))
+          :
+          <TransitionGroup>
+            {taskDraft.map(task => (
+              <CSSTransition
+                key={task.id}
+                classNames="tarea"
+                timeout={500}
+              >
+                <Task task={task} />
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         }
         <button
           type="button"
